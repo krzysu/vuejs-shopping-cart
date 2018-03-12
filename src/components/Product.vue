@@ -35,6 +35,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.product {
+  overflow: hidden;
+}
+
 .product__price {
   display: inline-block;
   line-height: 34px;
