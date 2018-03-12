@@ -1,18 +1,30 @@
 <template>
-    <div>
-        <h3>Products</h3>
-        <ul class="product-list">
-            <li class="product-list__item">
-                item
-            </li>
-        </ul>
-    </div>
+  <div>
+    <h3>Products</h3>
+    <ul class="product-list">
+      <li
+        class="product-list__item"
+        v-for="product in products"
+        :key="product.id"
+      >
+        <Product v-bind="product" />
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import Product from "./Product.vue";
+import data from "../data/products";
+
 export default {
   name: "ProductList",
-  props: {}
+  components: {
+    Product
+  },
+  data: () => ({
+    products: data
+  })
 };
 </script>
 

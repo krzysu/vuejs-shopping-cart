@@ -1,23 +1,46 @@
 <template>
-    <div>
-        <h3>Shopping Cart</h3>
-
-        <div class="cart">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    items
-                    <div class="cart__total">Total: {{total}} {{currency}}</div>
-                </div>
-            </div>
+  <div>
+    <h3>Shopping Cart</h3>
+    <div class="cart">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="cart__body" v-if="items.length > 0">
+            <CartItem
+              v-for="item in items"
+              :key="item.id"
+              :name="item.name"
+              :price="item.price"
+              :currency="item.currency"
+            />
+          </div>
+          <div class="alert alert-info" v-if="items.length === 0">
+            Cart is empty
+          </div>
+          <div class="cart__total">Total: {{total}} {{currency}}</div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
+import CartItem from "./CartItem.vue";
+import data from "../data/products";
+
 export default {
   name: "Cart",
+  components: {
+    CartItem
+  },
   props: {
-    total: Number,
+    items: {
+      type: Array,
+      default: () => data
+    },
+    total: {
+      type: Number,
+      default: 0
+    },
     currency: String
   }
 };
@@ -26,22 +49,6 @@ export default {
 <style scoped lang="scss">
 .cart__body {
   margin-bottom: 0.7em;
-}
-
-.cart-item {
-  margin-bottom: 0.3em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.cart-item__name {
-  margin-left: 0.5em;
-  vertical-align: middle;
-}
-
-.cart-item__price {
-  font-weight: bold;
 }
 
 .cart__total {
