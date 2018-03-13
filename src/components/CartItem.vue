@@ -1,10 +1,16 @@
 <template>
   <div class="cart-item">
     <div>
-      <button class="btn btn-danger btn-xs">X</button>
-      <span class="cart-item__name">{{name}}</span>
+      <button class="btn btn-danger btn-xs" @click="removeFromCart(id)">
+        X
+      </button>
+      <span class="cart-item__name">
+        {{name}}
+      </span>
     </div>
-    <div class="cart-item__price">{{price}} {{currency}}</div>
+    <div class="cart-item__price">
+      {{price}} {{currency}}
+    </div>
   </div>
 </template>
 
@@ -12,9 +18,15 @@
 export default {
   name: "CartItem",
   props: {
+    id: Number,
     name: String,
     price: Number,
     currency: String
+  },
+  methods: {
+    removeFromCart(id) {
+      this.$store.dispatch("removeFromCart", { id });
+    }
   }
 };
 </script>

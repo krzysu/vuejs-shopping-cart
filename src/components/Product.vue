@@ -1,19 +1,19 @@
 <template>
   <div class="product thumbnail">
-    <img v-bind:src="image" alt="product" />
+    <img :src="image" alt="product" />
     <div class="caption">
       <h3>{{name}}</h3>
       <div class="product__price">{{price}} {{currency}}</div>
       <div class="product__button-wrap">
         <button
           class="btn"
-          v-bind:class="{
+          :class="{
             'btn-danger': isInCart,
             'btn-primary': !isInCart
           }"
+          @click="isInCart ? removeFromCart(id) : addToCart(id)"
         >
-        <span v-if="isInCart">Remove</span>
-        <span v-else>Add to cart</span>
+        {{isInCart ? 'Remove' : 'Add to cart'}}
         </button>
       </div>
     </div>
@@ -28,8 +28,20 @@ export default {
     name: String,
     price: Number,
     currency: String,
-    image: String,
-    isInCart: Boolean
+    image: String
+  },
+  computed: {
+    isInCart() {
+      return this.$store.getters.isInCart(this.id);
+    }
+  },
+  methods: {
+    addToCart(id) {
+      this.$store.dispatch("addToCart", { id });
+    },
+    removeFromCart(id) {
+      this.$store.dispatch("removeFromCart", { id });
+    }
   }
 };
 </script>

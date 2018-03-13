@@ -8,6 +8,7 @@
             <CartItem
               v-for="item in items"
               :key="item.id"
+              :id="item.id"
               :name="item.name"
               :price="item.price"
               :currency="item.currency"
@@ -25,23 +26,22 @@
 
 <script>
 import CartItem from "./CartItem.vue";
-import data from "../data/products";
 
 export default {
   name: "Cart",
   components: {
     CartItem
   },
-  props: {
-    items: {
-      type: Array,
-      default: () => data
+  computed: {
+    items() {
+      return this.$store.state.cart;
     },
-    total: {
-      type: Number,
-      default: 0
+    total() {
+      return this.$store.getters.getTotal;
     },
-    currency: String
+    currency() {
+      return this.$store.state.currency;
+    }
   }
 };
 </script>

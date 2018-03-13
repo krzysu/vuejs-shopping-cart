@@ -15,16 +15,17 @@
 
 <script>
 import Product from "./Product.vue";
-import data from "../data/products";
 
 export default {
   name: "ProductList",
   components: {
     Product
   },
-  data: () => ({
-    products: data
-  })
+  computed: {
+    products() {
+      return this.$store.state.products;
+    }
+  }
 };
 </script>
 
